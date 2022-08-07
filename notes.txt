@@ -1,0 +1,47 @@
+1) frontend
+-----------
+
+google fonts
+-------------
+
+https://fonts.google.com/
+----------------------------------------
+
+npx create-react-app admin
+
+npm i styled-components
+
+npm install @mui/material @emotion/react @emotion/styled
+
+npm install @mui/icons-material
+
+npm i react-router-dom
+
+npm i recharts
+
+npm i @mui/x-data-grid
+
+npm i axios
+
+npm i react-stripe-checkout
+
+npm install @reduxjs/toolkit react-redux redux
+
+npm i redux-persist
+
+npm i timeago.js
+
+npm i firebase
+
+2)backend
+------------
+npm init 
+
+npm i express mongoose dotenv nodemon cors
+
+npm i crypto-js
+
+npm i jsonwebtoken
+
+npm i stripe
+

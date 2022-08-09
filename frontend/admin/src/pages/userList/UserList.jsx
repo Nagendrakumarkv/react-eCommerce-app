@@ -7,20 +7,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, getProducts, getUsers } from "../../redux/apiCalls";
 
 export default function UserList() {
-  const dispatch=useDispatch();
-  const users=useSelector(state=>state.user.users);
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.user.users);
 
-  console.log("before useeffet")
+  console.log("before useeffet");
 
-  useEffect(()=>{
-    console.log("effect")
-    getUsers(dispatch)    
-  },[dispatch])
+  useEffect(() => {
+    console.log("effect");
+    getUsers(dispatch);
+  }, [dispatch]);
 
   const handleDelete = (id) => {
-   deleteUser(id,dispatch)
+    deleteUser(id, dispatch);
   };
-  
+
   const columns = [
     { field: "_id", headerName: "ID", width: 220 },
     {
@@ -83,7 +83,7 @@ export default function UserList() {
         rows={users}
         disableSelectionOnClick
         columns={columns}
-        getRowId={(row)=>row._id}
+        getRowId={(row) => row._id}
         pageSize={8}
         checkboxSelection
       />

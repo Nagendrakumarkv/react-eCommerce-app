@@ -67,10 +67,10 @@ export const getUsers = async (dispatch) => {
   }
 };
 //ADD USER
-export const addUser = async (user,dispatch) => {
+export const addUser = async (user, dispatch) => {
   dispatch(AddUserStart());
   try {
-    const res = await publicRequest.post("/auth/register",user);
+    const res = await publicRequest.post("/auth/register", user);
     dispatch(AddUserSuccess(res.data));
   } catch {
     dispatch(AddUserFailure());
@@ -78,11 +78,11 @@ export const addUser = async (user,dispatch) => {
 };
 
 //UPDATE USER
-export const updateUser = async (id,user,dispatch) => {
+export const updateUser = async (id, user, dispatch) => {
   dispatch(UpdateUserStart());
   try {
-    const res = await userRequest.put(`/users/${id}`,user);
-    dispatch(UpdateUserSuccess({id:res.data._id,user:res.data}));
+    const res = await userRequest.put(`/users/${id}`, user);
+    dispatch(UpdateUserSuccess({ id: res.data._id, user: res.data }));
   } catch {
     dispatch(UpdateUserFailure());
   }

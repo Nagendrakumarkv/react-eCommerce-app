@@ -21,16 +21,15 @@ import { useSelector } from "react-redux";
 const App = () => {
   // const admin = useSelector((state) => state.user.currentUser.isAdmin);
 
-
   return (
     <Router>
       <Routes>
-      {/* <Route path="/" element={!admin ? <Login/>:<Home/>}/> */}
-      {/* <Route path="/login" element={admin?<Navigate to="/"/>:<Login/>} /> */}
-      <Route path="/login" element={<Login/>} />
+        {/* <Route path="/" element={!admin ? <Login/>:<Home/>}/> */}
+        {/* <Route path="/login" element={admin?<Navigate to="/"/>:<Login/>} /> */}
+        <Route path="/login" element={<Login />} />
       </Routes>
       {/* { admin && ( */}
-      {  (
+      {
         <>
           <Topbar />
           <div className="container">
@@ -46,7 +45,7 @@ const App = () => {
             </Routes>
           </div>
         </>
-      )}
+      }
     </Router>
   );
 };

@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import "./newProduct.css";
 import app from "../../firebase";
 import { addProduct } from "../../redux/apiCalls";
@@ -9,8 +14,8 @@ export default function NewProduct() {
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
   const [cat, setCat] = useState([]);
- const dispatch=useDispatch()
- 
+  const dispatch = useDispatch();
+
   const handleInput = (e) => {
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -23,7 +28,7 @@ export default function NewProduct() {
 
   const handleClick = (e) => {
     e.preventDefault();
-    const fileName=new Date().getTime()+" "+file.name;
+    const fileName = new Date().getTime() + " " + file.name;
     const storage = getStorage(app);
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -57,13 +62,12 @@ export default function NewProduct() {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log(downloadURL)
+          console.log(downloadURL);
           const product = { ...inputs, img: downloadURL, categories: cat };
           addProduct(product, dispatch);
         });
       }
     );
-
   };
   return (
     <div className="newProduct">

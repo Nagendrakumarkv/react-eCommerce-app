@@ -25,7 +25,10 @@ export default function WidgetSm() {
         {users.map((user) => (
           <li className="widgetSmListItem">
             <img
-              src={user.img || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
+              src={
+                user.img ||
+                "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"
+              }
               alt=""
               className="widgetSmImg"
             />

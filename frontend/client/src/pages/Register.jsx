@@ -5,6 +5,7 @@ import { publicRequest, userRequest } from "../requestMethods";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { register } from "../redux/apiCalls";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -62,7 +63,13 @@ const Button = styled.button`
 const Register = () => {
   const [inputs, setInputs] = useState({});
 
-   const dispatch=useDispatch();
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const registeredUser = useSelector((state) => state.user.registeredUser);
+
+  console.log(registeredUser);
 
   const handleInputs = (e) => {
     setInputs((prev) => {
@@ -72,8 +79,10 @@ const Register = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    register(dispatch,inputs)
-    console.log(inputs)
+    register(dispatch, inputs);
+    if (registeredUser) {
+      navigate("/login");
+    }
   };
   return (
     <Container>

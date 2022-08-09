@@ -1,6 +1,6 @@
 import { Add, Remove } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -9,6 +9,7 @@ import { mobile } from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useNavigate } from "react-router-dom";
 import { userRequest } from "../requestMethods";
+import { removeProduct } from "../redux/cartRedux";
 
 const KEY =
   "pk_test_51LPO1XSFms8ysZFHi9Qk135qL9lroYZXKpU5KUCNdOKZNtGuXbwZZFswc01eQiZRam50BugAtTiG8lXOLB3gObd000YcSUspYs";
@@ -123,6 +124,13 @@ const ProductPrice = styled.div`
   ${mobile({ marginBottom: "20px" })}
 `;
 
+const ProductRemove = styled.span`
+  color: red;
+  font-size: 20px;
+  text-decoration: underline;
+  cursor: pointer;
+`;
+
 const Hr = styled.hr`
   background-color: #eee;
   border: none;
@@ -153,6 +161,22 @@ const SummaryItemText = styled.span``;
 
 const SummaryItemPrice = styled.span``;
 
+const NoCartInfo = styled.span`
+  color: white;
+  background-color: black;
+  font-size: 20px;
+  width: 300px;
+  height: 10px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 30px;
+  margin-top: 50px;
+  margin-left: 400px;
+`;
+const NoCartMarginBottom = styled.span`
+  margin-bottom: 270px;
+`;
+
 const Button = styled.button`
   width: 100%;
   padding: 10px;
@@ -163,6 +187,8 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
 
   const [stripeToken, setStripeToken] = useState(null);
 
@@ -189,6 +215,12 @@ const Cart = () => {
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart, navigate]);
+
+  const handleProductRemove = (productId) => {
+    console.log(productId);
+    console.log(cart);
+    dispatch(removeProduct(productId));
+  };
   return (
     <Container>
       <Navbar />
@@ -204,69 +236,82 @@ const Cart = () => {
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
-          <Info>
-            {cart.products.map((product) => (
-              <Product>
-                <ProductDetail>
-                  <Image src={product.img} />
-                  <Details>
-                    <ProductName>
-                      <b>Product:</b> {product.title}
-                    </ProductName>
-                    <ProductId>
-                      <b>ID:</b> {product._id}
-                    </ProductId>
-                    <ProductColor color={product.color} />
-                    <ProductSize>
-                      <b>Size:</b> {product.size}
-                    </ProductSize>
-                  </Details>
-                </ProductDetail>
-                <PriceDetail>
-                  <ProductAmountContainer>
-                    <Add />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove />
-                  </ProductAmountContainer>
-                  <ProductPrice>
-                    $ {product.price * product.quantity}
-                  </ProductPrice>
-                </PriceDetail>
-              </Product>
-            ))}
-            <Hr />
-          </Info>
-          <Summary>
-            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-            <SummaryItem>
-              <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
-            </SummaryItem>
-            <StripeCheckout
-              name="Naga shop"
-              image="https://i.ibb.co/DG69bQ4/2.png"
-              billingAddress
-              shippingAddress
-              description={`Your total is $${cart.total}`}
-              amount={cart.total * 100}
-              token={onToken}
-              stripeKey={KEY}
-            >
-              <Button>CHECKOUT NOW</Button>
-            </StripeCheckout>
-          </Summary>
+          {cart.products.length > 0 ? (
+            <Info>
+              {cart.products.map((product) => (
+                <Product>
+                  <ProductDetail>
+                    <Image src={product.img} />
+                    <Details>
+                      <ProductName>
+                        <b>Product:</b> {product.title}
+                      </ProductName>
+                      <ProductId>
+                        <b>ID:</b> {product._id}
+                      </ProductId>
+                      <ProductColor color={product.color} />
+                      <ProductSize>
+                        <b>Size:</b> {product.size}
+                      </ProductSize>
+                      <ProductRemove
+                        onClick={() => handleProductRemove(product._id)}
+                      >
+                        remove
+                      </ProductRemove>
+                    </Details>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <Add />
+                      <ProductAmount>{product.quantity}</ProductAmount>
+                      <Remove />
+                    </ProductAmountContainer>
+                    <ProductPrice>
+                      $ {product.price * product.quantity}
+                    </ProductPrice>
+                  </PriceDetail>
+                </Product>
+              ))}
+              <Hr />
+            </Info>
+          ) : (
+            <NoCartInfo>no products are available in cart</NoCartInfo>
+          )}
+          {cart.products.length > 0 ? (
+            <Summary>
+              <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+              <SummaryItem>
+                <SummaryItemText>Subtotal</SummaryItemText>
+                <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem>
+                <SummaryItemText>Estimated Shipping</SummaryItemText>
+                <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem>
+                <SummaryItemText>Shipping Discount</SummaryItemText>
+                <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem type="total">
+                <SummaryItemText>Total</SummaryItemText>
+                <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              </SummaryItem>
+              <StripeCheckout
+                name="Naga shop"
+                image="https://i.ibb.co/DG69bQ4/2.png"
+                billingAddress
+                shippingAddress
+                description={`Your total is $${cart.total}`}
+                amount={cart.total * 100}
+                token={onToken}
+                stripeKey={KEY}
+              >
+                <Button>CHECKOUT NOW</Button>
+              </StripeCheckout>
+            </Summary>
+          ) : (
+            <NoCartMarginBottom></NoCartMarginBottom>
+          )}
         </Bottom>
       </Wrapper>
       <Footer />

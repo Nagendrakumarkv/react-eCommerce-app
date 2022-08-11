@@ -11,6 +11,8 @@ const router = express.Router();
 //CREATE CART
 router.post("/", verifyToken, async (req, res) => {
   try {
+    console.log("hi")
+    console.log(req.body)
     const newCart = new Cart(req.body);
     const savedCart = await newCart.save();
     res.status(200).json(savedCart);

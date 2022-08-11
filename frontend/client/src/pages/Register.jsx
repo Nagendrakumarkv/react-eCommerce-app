@@ -69,8 +69,6 @@ const Register = () => {
 
   const registeredUser = useSelector((state) => state.user.registeredUser);
 
-  console.log(registeredUser);
-
   const handleInputs = (e) => {
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };

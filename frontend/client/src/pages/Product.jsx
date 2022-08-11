@@ -1,12 +1,13 @@
 import { Add, Remove } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
+import { addToCart } from "../redux/apiCalls";
 import { addProduct } from "../redux/cartRedux";
 import { publicRequest } from "../requestMethods";
 import { mobile } from "../responsive";
@@ -120,6 +121,8 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  const user = useSelector((state) => state.user.currentUser);
+
   const location = useLocation();
   const id = location.pathname.split("/")[2];
 
@@ -143,14 +146,21 @@ const Product = () => {
 
   const handleQuantity = (type) => {
     if (type === "dec") {
-      console.log("q");
       quantity > 1 && setQuantity(quantity - 1);
     } else {
       setQuantity(quantity + 1);
     }
   };
   const handleClick = () => {
-    dispatch(addProduct({ ...product, quantity, color, size }));
+    //ADD PRODUCT TO ACRT
+    // dispatch(addProduct({ ...product, quantity, color, size }));
+    addToCart(dispatch, {
+      ...product,
+      quantity,
+      color,
+      size,
+      userId: user._id,
+    });
   };
   return (
     <Container>

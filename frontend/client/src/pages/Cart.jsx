@@ -216,10 +216,8 @@ const Cart = () => {
     stripeToken && makeRequest();
   }, [stripeToken, cart, navigate]);
 
-  const handleProductRemove = (productId) => {
-    console.log(productId);
-    console.log(cart);
-    dispatch(removeProduct(productId));
+  const handleProductRemove = (cartProductId) => {
+    dispatch(removeProduct(cartProductId));
   };
   return (
     <Container>
@@ -239,7 +237,7 @@ const Cart = () => {
           {cart.products.length > 0 ? (
             <Info>
               {cart.products.map((product) => (
-                <Product>
+                <Product key={product._id}>
                   <ProductDetail>
                     <Image src={product.img} />
                     <Details>
@@ -254,7 +252,9 @@ const Cart = () => {
                         <b>Size:</b> {product.size}
                       </ProductSize>
                       <ProductRemove
-                        onClick={() => handleProductRemove(product._id)}
+                        onClick={() =>
+                          handleProductRemove(product.cartProductId)
+                        }
                       >
                         remove
                       </ProductRemove>

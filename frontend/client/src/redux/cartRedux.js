@@ -10,20 +10,12 @@ const cartSlice = createSlice({
     error: false,
   },
   reducers: {
-    //add the products to cart
-
-    // addProduct: (state, action) => {
-    //   state.quantity += 1;
-    //   state.products.push(action.payload);
-    //   state.total += action.payload.price * action.payload.quantity;
-    //   state.checkDuplicateIds=null;
-    // },
+    //ADD PRODUCT TO CART
     addToCartStart: (state) => {
       state.isFetching = true;
       state.error = false;
     },
     addToCartSuccess: (state, action) => {
-
       state.isFetching = false;
       state.quantity += 1;
       state.products.push(action.payload);
@@ -35,14 +27,20 @@ const cartSlice = createSlice({
       state.error = true;
     },
 
-    //remove the products from cart
-    removeProduct: (state, action) => {
+    //REMOVE PRODUCT FROM CART
+    removeProductStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
+    removeProductSuccess: (state, action) => {
       state.isFetching = false;
       state.quantity = state.quantity - 1;
       state.total =
         state.total -
         state.products[
-          state.products.findIndex((product) => product.cartProductId === action.payload)
+          state.products.findIndex(
+            (product) => product.cartProductId === action.payload
+          )
         ].price *
           state.products[
             state.products.findIndex(
@@ -57,9 +55,22 @@ const cartSlice = createSlice({
         (product) => product.cartProductId !== action.payload
       );
     },
+    removeProductFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
   },
 });
 
 // export const { addProduct, removeProduct } = cartSlice.actions;
-export const { addProduct, removeProduct,addToCartStart,addToCartSuccess,addToCartFailure } = cartSlice.actions;
+export const {
+  addProduct,
+  removeProduct,
+  addToCartStart,
+  addToCartSuccess,
+  addToCartFailure,
+  removeProductStart,
+  removeProductSuccess,
+  removeProductFailure,
+} = cartSlice.actions;
 export default cartSlice.reducer;

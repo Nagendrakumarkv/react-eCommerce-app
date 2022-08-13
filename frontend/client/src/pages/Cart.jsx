@@ -9,7 +9,7 @@ import { mobile } from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useNavigate } from "react-router-dom";
 import { userRequest } from "../requestMethods";
-import { removeProduct } from "../redux/cartRedux";
+import { removeCartProduct } from "../redux/apiCalls";
 
 const KEY =
   "pk_test_51LPO1XSFms8ysZFHi9Qk135qL9lroYZXKpU5KUCNdOKZNtGuXbwZZFswc01eQiZRam50BugAtTiG8lXOLB3gObd000YcSUspYs";
@@ -217,7 +217,7 @@ const Cart = () => {
   }, [stripeToken, cart, navigate]);
 
   const handleProductRemove = (cartProductId) => {
-    dispatch(removeProduct(cartProductId));
+    removeCartProduct(dispatch, cartProductId);
   };
   return (
     <Container>
@@ -237,7 +237,7 @@ const Cart = () => {
           {cart.products.length > 0 ? (
             <Info>
               {cart.products.map((product) => (
-                <Product key={product._id}>
+                <Product key={product._id && product.cartProductId}>
                   <ProductDetail>
                     <Image src={product.img} />
                     <Details>

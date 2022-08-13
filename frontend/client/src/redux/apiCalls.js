@@ -3,6 +3,9 @@ import {
   addToCartFailure,
   addToCartStart,
   addToCartSuccess,
+  removeProductFailure,
+  removeProductStart,
+  removeProductSuccess,
 } from "./cartRedux";
 import {
   loginFailure,
@@ -45,10 +48,23 @@ export const addToCart = async (dispatch, cartItem) => {
     });
     let newCartObject = {
       ...cartItem,
-      cartProductId: res.data.products[0]._id,
+      cartProductId: res.data._id,
     };
     dispatch(addToCartSuccess(newCartObject));
   } catch {
     dispatch(addToCartFailure());
+  }
+};
+
+//REMOVE PRODUCT FROM CART
+export const removeCartProduct = async (dispatch, id) => {
+  console.log("id ", id);
+  dispatch(removeProductStart());
+  try {
+    const res = await userRequest.delete(`/carts/${id}`);
+    console.log(res);
+    dispatch(removeProductSuccess(id));
+  } catch {
+    dispatch(removeProductFailure());
   }
 };

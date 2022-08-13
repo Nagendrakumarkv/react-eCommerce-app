@@ -11,8 +11,6 @@ const router = express.Router();
 //CREATE CART
 router.post("/", verifyToken, async (req, res) => {
   try {
-    console.log("hi")
-    console.log(req.body)
     const newCart = new Cart(req.body);
     const savedCart = await newCart.save();
     res.status(200).json(savedCart);
@@ -59,7 +57,7 @@ router.get("/find/:userId", async (req, res) => {
 });
 
 //GET ALL CART
-router.get("/",verifyTokenAndAdmin ,async (req, res) => {
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
     const carts = await Cart.find();
     res.status(200).json(carts);

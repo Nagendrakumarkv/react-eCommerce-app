@@ -1,14 +1,13 @@
 import { Add, Remove } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { addToCart } from "../redux/apiCalls";
-import { addProduct } from "../redux/cartRedux";
 import { publicRequest } from "../requestMethods";
 import { mobile } from "../responsive";
 
@@ -123,7 +122,12 @@ const Button = styled.button`
 const Product = () => {
   const user = useSelector((state) => state.user.currentUser);
 
+  const cartProducts = useSelector((state) => state.cart.products);
+
+  let isSameProductInCart = false;
+
   const location = useLocation();
+
   const id = location.pathname.split("/")[2];
 
   const [product, setProduct] = useState({});
@@ -151,9 +155,10 @@ const Product = () => {
       setQuantity(quantity + 1);
     }
   };
+
+  //ADD PRODUCT TO CART
   const handleClick = () => {
-    //ADD PRODUCT TO ACRT
-    // dispatch(addProduct({ ...product, quantity, color, size }));
+    //ADD TO CART
     addToCart(dispatch, {
       ...product,
       quantity,
@@ -162,6 +167,18 @@ const Product = () => {
       userId: user._id,
     });
   };
+
+  //CHECK IF SELECTED PRODUCT IS AVAILABLE IN CART
+  for (let i = 0; i < cartProducts.length; i++) {
+    if (
+      cartProducts[i].color === color &&
+      cartProducts[i].quantity === quantity &&
+      cartProducts[i].size === size
+    ) {
+      isSameProductInCart = true;
+    }
+  }
+
   return (
     <Container>
       <Navbar />
@@ -202,7 +219,13 @@ const Product = () => {
                 onClick={() => handleQuantity("inc")}
               />
             </AmountContainer>
-            <Button onClick={handleClick}>ADD TO CART</Button>
+            {isSameProductInCart ? (
+              <Link to="/cart">
+                <Button>GOTO CART</Button>
+              </Link>
+            ) : (
+              <Button onClick={handleClick}>ADD TO CART</Button>
+            )}
           </AddContainer>
         </InfoContainer>
       </Wrapper>

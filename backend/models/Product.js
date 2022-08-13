@@ -9,9 +9,9 @@ const ProductShema = new mongoose.Schema(
     size: { type: Array },
     color: { type: Array },
     price: { type: Number, required: true },
-    inStock:{type:Boolean,default:true}
+    inStock: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
 
-module.exports=mongoose.model('Product',ProductShema)
+module.exports = mongoose.model("Product", ProductShema);

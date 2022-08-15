@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { removeCartProduct } from "../redux/apiCalls";
-import { increaseTotal } from "../redux/cartRedux";
+import { incOrDecQuantity } from "../redux/cartRedux";
 import { mobile } from "../responsive";
 
 const Product = styled.div`
@@ -91,11 +91,11 @@ const SingleCartProduct = ({ product }) => {
     if (type === "dec") {
       if (quantity > 1) {
         setQuantity(quantity - 1);
-        dispatch(increaseTotal({ amount: amount, type: "dec", id: id }));
+        dispatch(incOrDecQuantity({ amount: amount, type: "dec", id: id }));
       }
     } else {
       setQuantity(quantity + 1);
-      dispatch(increaseTotal({ amount: amount, type: "inc", id: id }));
+      dispatch(incOrDecQuantity({ amount: amount, type: "inc", id: id }));
     }
   };
 

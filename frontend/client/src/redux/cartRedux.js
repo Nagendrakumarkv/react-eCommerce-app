@@ -59,8 +59,8 @@ const cartSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
-
-    increaseTotal: (state, action) => {
+    //ADD THE AMOUNT TO TOTAL PRICE BASED INCREASE OR DEACREASE THE QUANTITY
+    incOrDecQuantity: (state, action) => {
       if (action.payload.type === "inc") {
         for (let i = 0; i < state.products.length; i++) {
           if (state.products[i].cartProductId === action.payload.id) {
@@ -80,7 +80,6 @@ const cartSlice = createSlice({
   },
 });
 
-// export const { addProduct, removeProduct } = cartSlice.actions;
 export const {
   addProduct,
   removeProduct,
@@ -90,6 +89,6 @@ export const {
   removeProductStart,
   removeProductSuccess,
   removeProductFailure,
-  increaseTotal,
+  incOrDecQuantity,
 } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   BrowserRouter as Router,
@@ -19,6 +21,7 @@ const App = () => {
   console.log("user ", user);
   return (
     <Router>
+      <ToastContainer/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
@@ -31,6 +34,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/success" element={<Success />} />
       </Routes>
+      <ToastContainer/>
     </Router>
   );
 };

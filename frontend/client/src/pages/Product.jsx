@@ -1,4 +1,3 @@
-import { Add, Remove } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
@@ -91,23 +90,6 @@ const AddContainer = styled.div`
   ${mobile({ width: "100%" })}
 `;
 
-const AmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 700;
-`;
-
-const Amount = styled.span`
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid teal;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px 5px;
-`;
-
 const Button = styled.button`
   padding: 15px;
   border: 2px solid teal;
@@ -148,14 +130,6 @@ const Product = () => {
     getProduct();
   }, [id]);
 
-  const handleQuantity = (type) => {
-    if (type === "dec") {
-      quantity > 1 && setQuantity(quantity - 1);
-    } else {
-      setQuantity(quantity + 1);
-    }
-  };
-
   //ADD PRODUCT TO CART
   const handleClick = () => {
     //ADD TO CART
@@ -170,11 +144,7 @@ const Product = () => {
 
   //CHECK IF SELECTED PRODUCT IS AVAILABLE IN CART
   for (let i = 0; i < cartProducts.length; i++) {
-    if (
-      cartProducts[i].color === color &&
-      cartProducts[i].quantity === quantity &&
-      cartProducts[i].size === size
-    ) {
+    if (cartProducts[i].color === color && cartProducts[i].size === size) {
       isSameProductInCart = true;
     }
   }
@@ -208,17 +178,6 @@ const Product = () => {
             </Filter>
           </FilterContainer>
           <AddContainer>
-            <AmountContainer>
-              <Remove
-                style={{ cursor: "pointer" }}
-                onClick={() => handleQuantity("dec")}
-              />
-              <Amount>{quantity}</Amount>
-              <Add
-                style={{ cursor: "pointer" }}
-                onClick={() => handleQuantity("inc")}
-              />
-            </AmountContainer>
             {isSameProductInCart ? (
               <Link to="/cart">
                 <Button>GOTO CART</Button>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
-import { logOut } from "../redux/userRedux";
+import { logOut } from "../redux/apiCalls";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
@@ -89,8 +89,11 @@ const Navbar = () => {
   const user = useSelector((state) => state.user.currentUser);
 
   const handleSignOut = () => {
-    dispatch(logOut());
-    navigate("/login");
+    if(window.confirm("Are you sure to sign out?"))
+    {
+      logOut(dispatch)
+      navigate("/login");
+    }
   };
 
   return (

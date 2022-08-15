@@ -1,6 +1,5 @@
-import { Add, Remove } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -9,7 +8,7 @@ import { mobile } from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useNavigate } from "react-router-dom";
 import { userRequest } from "../requestMethods";
-import { removeCartProduct } from "../redux/apiCalls";
+import SingleCartProduct from "./SingleCartProduct";
 
 const KEY =
   "pk_test_51LPO1XSFms8ysZFHi9Qk135qL9lroYZXKpU5KUCNdOKZNtGuXbwZZFswc01eQiZRam50BugAtTiG8lXOLB3gObd000YcSUspYs";
@@ -61,74 +60,6 @@ const Bottom = styled.div`
 
 const Info = styled.div`
   flex: 3;
-`;
-
-const Product = styled.div`
-  display: flex;
-  justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
-`;
-
-const ProductDetail = styled.div`
-  flex: 2;
-  display: flex;
-`;
-
-const Image = styled.img`
-  width: 200px;
-`;
-
-const Details = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
-const ProductName = styled.span``;
-
-const ProductId = styled.span``;
-
-const ProductColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-`;
-
-const ProductSize = styled.span``;
-
-const PriceDetail = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ProductAmount = styled.div`
-  font-size: 24px;
-  margin: 5px;
-  ${mobile({ margin: "5px 15px" })}
-`;
-
-const ProductPrice = styled.div`
-  font-size: 30px;
-  font-weight: 200;
-  ${mobile({ marginBottom: "20px" })}
-`;
-
-const ProductRemove = styled.span`
-  color: red;
-  font-size: 20px;
-  text-decoration: underline;
-  cursor: pointer;
 `;
 
 const Hr = styled.hr`
@@ -188,8 +119,6 @@ const Button = styled.button`
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
 
-  const dispatch = useDispatch();
-
   const [stripeToken, setStripeToken] = useState(null);
 
   const navigate = useNavigate();
@@ -216,9 +145,6 @@ const Cart = () => {
     stripeToken && makeRequest();
   }, [stripeToken, cart, navigate]);
 
-  const handleProductRemove = (cartProductId) => {
-    removeCartProduct(dispatch, cartProductId);
-  };
   return (
     <Container>
       <Navbar />
@@ -237,40 +163,10 @@ const Cart = () => {
           {cart.products.length > 0 ? (
             <Info>
               {cart.products.map((product) => (
-                <Product key={product._id && product.cartProductId}>
-                  <ProductDetail>
-                    <Image src={product.img} />
-                    <Details>
-                      <ProductName>
-                        <b>Product:</b> {product.title}
-                      </ProductName>
-                      <ProductId>
-                        <b>ID:</b> {product._id}
-                      </ProductId>
-                      <ProductColor color={product.color} />
-                      <ProductSize>
-                        <b>Size:</b> {product.size}
-                      </ProductSize>
-                      <ProductRemove
-                        onClick={() =>
-                          handleProductRemove(product.cartProductId)
-                        }
-                      >
-                        remove
-                      </ProductRemove>
-                    </Details>
-                  </ProductDetail>
-                  <PriceDetail>
-                    <ProductAmountContainer>
-                      <Add />
-                      <ProductAmount>{product.quantity}</ProductAmount>
-                      <Remove />
-                    </ProductAmountContainer>
-                    <ProductPrice>
-                      $ {product.price * product.quantity}
-                    </ProductPrice>
-                  </PriceDetail>
-                </Product>
+                <SingleCartProduct
+                  product={product}
+                  key={product.cartProductId}
+                />
               ))}
               <Hr />
             </Info>

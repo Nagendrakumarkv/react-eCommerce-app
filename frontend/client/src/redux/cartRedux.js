@@ -59,6 +59,24 @@ const cartSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
+
+    increaseTotal: (state, action) => {
+      if (action.payload.type === "inc") {
+        for (let i = 0; i < state.products.length; i++) {
+          if (state.products[i].cartProductId === action.payload.id) {
+            state.total = state.total + action.payload.amount;
+            state.products[i].quantity = state.products[i].quantity + 1;
+          }
+        }
+      } else {
+        for (let i = 0; i < state.products.length; i++) {
+          if (state.products[i].cartProductId === action.payload.id) {
+            state.total = state.total - action.payload.amount;
+            state.products[i].quantity = state.products[i].quantity - 1;
+          }
+        }
+      }
+    },
   },
 });
 
@@ -72,5 +90,6 @@ export const {
   removeProductStart,
   removeProductSuccess,
   removeProductFailure,
+  increaseTotal,
 } = cartSlice.actions;
 export default cartSlice.reducer;

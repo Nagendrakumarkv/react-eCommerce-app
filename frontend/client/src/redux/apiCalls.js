@@ -9,6 +9,8 @@ import {
 } from "./cartRedux";
 import {
   loginFailure,
+  loginOutFailure,
+  loginOutStart,
   loginStart,
   loginSuccess,
   RegisterUserFailure,
@@ -16,14 +18,34 @@ import {
   RegisterUserSuccess,
 } from "./userRedux";
 
+import { toast } from "react-toastify";
+
 //LOGIN
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post("/auth/login", user);
     dispatch(loginSuccess(res.data));
+    toast.success("Login Successfully", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+    });
   } catch {
     dispatch(loginFailure());
+  }
+};
+
+//LOG OUT
+export const logOut = async (dispatch) => {
+  dispatch(loginOutStart());
+  try {
+    dispatch(loginSuccess());
+    toast.success("Sign Out Successfully", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+    });
+  } catch {
+    dispatch(loginOutFailure());
   }
 };
 
@@ -33,6 +55,10 @@ export const register = async (dispatch, user) => {
   try {
     const res = await publicRequest.post("/auth/register", user);
     dispatch(RegisterUserSuccess(res.data));
+    toast.success("Registered Successfully", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+    });
   } catch {
     dispatch(RegisterUserFailure());
   }
@@ -51,6 +77,10 @@ export const addToCart = async (dispatch, cartItem) => {
       cartProductId: res.data._id,
     };
     dispatch(addToCartSuccess(newCartObject));
+    toast.success("Product Added To Cart Successfully", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+    });
   } catch {
     dispatch(addToCartFailure());
   }
@@ -58,13 +88,19 @@ export const addToCart = async (dispatch, cartItem) => {
 
 //REMOVE PRODUCT FROM CART
 export const removeCartProduct = async (dispatch, id) => {
-  console.log("id ", id);
   dispatch(removeProductStart());
   try {
     const res = await userRequest.delete(`/carts/${id}`);
-    console.log(res);
     dispatch(removeProductSuccess(id));
+    toast.success(res.data, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+    });
   } catch {
     dispatch(removeProductFailure());
+    toast.error("Something Went Wrong", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+    });
   }
 };

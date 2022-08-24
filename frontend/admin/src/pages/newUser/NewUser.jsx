@@ -64,8 +64,6 @@ export default function NewUser() {
       }
     );
   };
-  console.log(inputs);
-  console.log(file);
   return (
     <div className="newUser">
       <h1 className="newUserTitle">New User</h1>

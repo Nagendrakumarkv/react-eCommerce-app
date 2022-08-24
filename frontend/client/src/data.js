@@ -26,13 +26,13 @@ export const categories = [
   {
     id: 1,
     img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "SHIRT STYLE!",
+    title: "WOMENS FASHION",
     cat: "women",
   },
   {
     id: 2,
-    img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "LOUNGEWEAR LOVE",
+    img: "https://th.bing.com/th/id/OIP.HQiVaLiq3GQIbHXiA1fWIQHaLH?w=182&h=273&c=7&r=0&o=5&dpr=1.25&pid=1.7",
+    title: "COATS",
     cat: "coat",
   },
   {
@@ -40,6 +40,12 @@ export const categories = [
     img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
     title: "LIGHT JACKETS",
     cat: "jackets",
+  },
+  {
+    id: 4,
+    img: "https://www.bing.com/th?id=OIP.gjPqtkYGI7Oan_EKFvaG5gHaLH&w=204&h=306&c=8&rs=1&qlt=90&o=6&dpr=1.25&pid=3.1&rm=2",
+    title: "MENS FASHION",
+    cat: "men",
   },
 ];
 

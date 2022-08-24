@@ -119,6 +119,8 @@ const Button = styled.button`
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
 
+  const user = useSelector((state) => state.user.currentUser);
+
   const [stripeToken, setStripeToken] = useState(null);
 
   const navigate = useNavigate();
@@ -128,6 +130,10 @@ const Cart = () => {
   };
 
   useEffect(() => {
+    //CKECK IF USER IS LOGGED OR NOT,IF LOGGED IN THEN SHOW THE CART ,ELSE IF NO LOGGED IN THEN SHOW THE LOGIN PAGE
+    if (!user) {
+      navigate("/login");
+    }
     const makeRequest = async () => {
       try {
         const res = await userRequest.post("/checkout/payment", {
@@ -143,7 +149,7 @@ const Cart = () => {
       } catch {}
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart, navigate]);
+  }, [stripeToken, cart, navigate, user]);
 
   return (
     <Container>

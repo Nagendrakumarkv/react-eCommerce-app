@@ -1,15 +1,26 @@
 import { Search, ShoppingCartOutlined } from "@mui/icons-material";
 import { Badge } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import { logOut } from "../redux/apiCalls";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
-  height: 60px;
+  /* height: 60px;
   ${mobile({ height: "50px" })}
+  position: sticky;
+  background-color: black;
+  top: 0;
+  z-index: 2; */
+  ${mobile({ height: "50px" })}
+  width: 100%;
+  height: 50px;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 `;
 
 const Wrapper = styled.div`
@@ -38,6 +49,7 @@ const SearchContainer = styled.div`
   align-items: center;
   margin-left: 25px;
   padding: 5px;
+  height: 20px;
 `;
 
 const Input = styled.input`
@@ -84,15 +96,19 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-  const quantity = useSelector((state) => state.cart.quantity);
+  let quantity = useSelector((state) => state.cart.quantity);
 
   const user = useSelector((state) => state.user.currentUser);
 
+  //CKECK IF USER IS LOGGED OR NOT,IF LOGGED IN THEN SHOW THE CART ,ELSE IF NO LOGGED IN THEN SHOW THE LOGIN PAGE
+  if (!user) {
+    quantity = 0;
+  }
+
   const handleSignOut = () => {
-    if(window.confirm("Are you sure to sign out?"))
-    {
-      logOut(dispatch)
-      navigate("/login");
+    if (window.confirm("Are you sure to sign out?")) {
+      logOut(dispatch);
+      navigate("/");
     }
   };
 
@@ -102,7 +118,10 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input placeholder="Search" />
+            <Input
+              style={{ height: "2px", marginBottom: "20px" }}
+              placeholder="Search"
+            />
             <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
@@ -115,14 +134,16 @@ const Navbar = () => {
               <Button onClick={handleSignOut}>SIGN OUT</Button>
             </MenuItem>
           ) : (
-            (<MenuItem>
-              <Link
-                to="/register"
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                REGISTER
-              </Link>
-            </MenuItem>)(
+            <>
+              <MenuItem>
+                <Link
+                  to="/register"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  REGISTER
+                </Link>
+              </MenuItem>
+
               <MenuItem>
                 <Link
                   to="/login"
@@ -131,7 +152,7 @@ const Navbar = () => {
                   SIGN IN
                 </Link>
               </MenuItem>
-            )
+            </>
           )}
 
           <Link to="/cart">

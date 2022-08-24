@@ -8,12 +8,17 @@ import {
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../redux/apiCalls";
+import { useNavigate } from "react-router-dom";
 
 export default function Topbar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    logOut(dispatch);
+    if (window.confirm("Are You Sure To Sign Out?")) {
+      logOut(dispatch);
+      navigate("/");
+    }
   };
   return (
     <div className="topbar">

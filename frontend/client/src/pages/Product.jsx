@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -116,6 +116,7 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -132,14 +133,18 @@ const Product = () => {
 
   //ADD PRODUCT TO CART
   const handleClick = () => {
-    //ADD TO CART
-    addToCart(dispatch, {
-      ...product,
-      quantity,
-      color,
-      size,
-      userId: user._id,
-    });
+    //CKECK IF USER IS LOGGED OR NOT,IF LOGGED IN THEN ADD TO CART ,ELSE IF NO LOGGED IN THEN SHOW THE LOGIN PAGE
+    if (user) {
+      addToCart(dispatch, {
+        ...product,
+        quantity,
+        color,
+        size,
+        userId: user._id,
+      });
+    } else {
+      navigate("/login");
+    }
   };
 
   //CHECK IF SELECTED PRODUCT IS AVAILABLE IN CART

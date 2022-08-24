@@ -18,10 +18,9 @@ import { useSelector } from "react-redux";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
-  console.log("user ", user);
   return (
     <Router>
-      <ToastContainer/>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
@@ -34,7 +33,6 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/success" element={<Success />} />
       </Routes>
-      <ToastContainer/>
     </Router>
   );
 };

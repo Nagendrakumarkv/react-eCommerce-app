@@ -59,7 +59,7 @@ const cartSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
-    //ADD THE AMOUNT TO TOTAL PRICE BASED INCREASE OR DEACREASE THE QUANTITY
+    //ADD THE AMOUNT TO TOTAL PRICE BASED INCREASE OR DEACREASE OF QUANTITY
     incOrDecQuantity: (state, action) => {
       if (action.payload.type === "inc") {
         for (let i = 0; i < state.products.length; i++) {

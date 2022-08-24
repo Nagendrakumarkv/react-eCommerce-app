@@ -13,6 +13,14 @@ import { mobile } from "../responsive";
 const Container = styled.div`
   display: flex;
   ${mobile({ flexDirection: "column" })}
+  width: 100%;
+  height: 50px;
+  background-color: white;
+  position: sticky;
+  /* position: fixed; */
+  top: 510px;
+  z-index: 999;
+  bottom: -30px;
 `;
 
 const Left = styled.div`

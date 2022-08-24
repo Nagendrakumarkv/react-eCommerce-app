@@ -17,36 +17,35 @@ import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
 import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-  // const admin = useSelector((state) => state.user.currentUser.isAdmin);
+  const isAdmin = useSelector((state) => state.user.currentUser.isAdmin);
 
   return (
-    <Router>
-      <Routes>
-        {/* <Route path="/" element={!admin ? <Login/>:<Home/>}/> */}
-        {/* <Route path="/login" element={admin?<Navigate to="/"/>:<Login/>} /> */}
-        <Route path="/login" element={<Login />} />
-      </Routes>
-      {/* { admin && ( */}
-      {
-        <>
-          <Topbar />
-          <div className="container">
-            <Sidebar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/users" element={<UserList />} />
-              <Route path="/user/:userId" element={<User />} />
-              <Route path="/newUser" element={<NewUser />} />
-              <Route path="/products" element={<ProductList />} />
-              <Route path="/product/:productId" element={<Product />} />
-              <Route path="/newProduct" element={<NewProduct />} />
-            </Routes>
-          </div>
-        </>
-      }
-    </Router>
+    <>
+      <Router>
+        <ToastContainer position="top-center" autoClose="3000" />
+        {isAdmin ? <Topbar /> : null}
+        <div className="container">
+          {isAdmin ? <Sidebar /> : null}
+          <Routes>
+            <Route path="/" element={isAdmin ? <Home /> : <Login />} />
+            <Route
+              path="/login"
+              element={isAdmin ? <Navigate to="/" /> : <Login />}
+            />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/user/:userId" element={<User />} />
+            <Route path="/newUser" element={<NewUser />} />
+            <Route path="/products" element={<ProductList />} />
+            <Route path="/product/:productId" element={<Product />} />
+            <Route path="/newProduct" element={<NewProduct />} />
+          </Routes>
+        </div>
+      </Router>
+    </>
   );
 };
 

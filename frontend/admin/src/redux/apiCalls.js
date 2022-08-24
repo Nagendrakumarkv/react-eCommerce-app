@@ -24,15 +24,17 @@ import {
   GetUserStart,
   GetUserSuccess,
   loginFailure,
+  loginOutFailure,
+  loginOutStart,
+  loginOutSuccess,
   loginStart,
   loginSuccess,
-  LogoutFailure,
-  LogoutStart,
-  LogoutSuccess,
   UpdateUserFailure,
   UpdateUserStart,
   UpdateUserSuccess,
 } from "./userRedux";
+
+import { toast } from "react-toastify";
 
 //LOGIN
 export const login = async (dispatch, user) => {
@@ -40,18 +42,21 @@ export const login = async (dispatch, user) => {
   try {
     const res = await publicRequest.post("/auth/login", user);
     dispatch(loginSuccess(res.data));
+    toast.success("Login Successfull");
   } catch {
     dispatch(loginFailure());
+    toast.error("Login Unsuccessful,Please Check the Credentials");
   }
 };
 
-//LOGOUT
+//LOG OUT
 export const logOut = async (dispatch) => {
-  dispatch(LogoutStart());
+  dispatch(loginOutStart());
   try {
-    dispatch(LogoutSuccess());
+    dispatch(loginOutSuccess());
+    toast.success("Sign Out Successfull");
   } catch {
-    dispatch(LogoutFailure());
+    dispatch(loginOutFailure());
   }
 };
 
@@ -60,7 +65,6 @@ export const getUsers = async (dispatch) => {
   dispatch(GetUserStart());
   try {
     const res = await userRequest.get("/users");
-    console.log("all users", res.data);
     dispatch(GetUserSuccess(res.data));
   } catch {
     dispatch(GetUserFailure());
@@ -72,8 +76,10 @@ export const addUser = async (user, dispatch) => {
   try {
     const res = await publicRequest.post("/auth/register", user);
     dispatch(AddUserSuccess(res.data));
+    toast.success("User Added Successfull");
   } catch {
     dispatch(AddUserFailure());
+    toast.error("User Added Unsuccessfull");
   }
 };
 
@@ -83,8 +89,10 @@ export const updateUser = async (id, user, dispatch) => {
   try {
     const res = await userRequest.put(`/users/${id}`, user);
     dispatch(UpdateUserSuccess({ id: res.data._id, user: res.data }));
+    toast.success("User Updated Successfull");
   } catch {
     dispatch(UpdateUserFailure());
+    toast.error("User Updated Unsuccessfull");
   }
 };
 //DELETE USER
@@ -93,8 +101,10 @@ export const deleteUser = async (id, dispatch) => {
   try {
     await userRequest.delete(`/users/${id}`);
     dispatch(DeleteUserSuccess(id));
+    toast.success("User Deleted Successfull");
   } catch {
     dispatch(DeleteUserFailure());
+    toast.error("User Deleted Unsuccessfull");
   }
 };
 
@@ -103,7 +113,6 @@ export const getProducts = async (dispatch) => {
   dispatch(GetProductStart());
   try {
     const res = await publicRequest.get("/products");
-    console.log("all products", res.data);
     dispatch(GetProductSuccess(res.data));
   } catch {
     dispatch(GetProductFailure());
@@ -115,8 +124,10 @@ export const deleteProduct = async (id, dispatch) => {
   try {
     await userRequest.delete(`/products/${id}`);
     dispatch(DeleteProductSuccess(id));
+    toast.success("Product Deleted Successfull");
   } catch {
     dispatch(DeleteProductFailure());
+    toast.error("Product Deleted Unsuccessfull");
   }
 };
 //UPDATE PRODUCT
@@ -125,8 +136,10 @@ export const updateProduct = async (id, product, dispatch) => {
   try {
     const res = await userRequest.put(`/products/${id}`, product);
     dispatch(UpdateProductSuccess({ id: res.data._id, product: res.data }));
+    toast.success("Product Updated Successfull");
   } catch {
     dispatch(UpdateProductFailure());
+    toast.error("Product Updated Unsuccessfull");
   }
 };
 //ADD PRODUCT
@@ -135,7 +148,9 @@ export const addProduct = async (product, dispatch) => {
   try {
     const res = await userRequest.post("/products", product);
     dispatch(AddProductSuccess(res.data));
+    toast.success("Product Added Successfull");
   } catch {
     dispatch(AddProductFailure());
+    toast.error("Product Added Unsuccessfull");
   }
 };

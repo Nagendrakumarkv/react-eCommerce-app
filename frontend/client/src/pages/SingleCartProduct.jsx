@@ -76,7 +76,6 @@ const ProductRemove = styled.span`
 `;
 
 const SingleCartProduct = ({ product }) => {
-  console.log(product.quantity);
   const [quantity, setQuantity] = useState(product.quantity);
 
   const dispatch = useDispatch();

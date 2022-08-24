@@ -4,7 +4,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { deleteProduct, getProducts, getUsers } from "../../redux/apiCalls";
+import { deleteProduct, getProducts } from "../../redux/apiCalls";
 
 export default function ProductList() {
   const dispatch = useDispatch();
@@ -15,7 +15,9 @@ export default function ProductList() {
   }, [dispatch]);
 
   const handleDelete = (id) => {
-    deleteProduct(id, dispatch);
+    if (window.confirm("Are You Sure To Delete The Product?")) {
+      deleteProduct(id, dispatch);
+    }
   };
 
   const columns = [
@@ -67,6 +69,7 @@ export default function ProductList() {
         columns={columns}
         getRowId={(row) => row._id}
         pageSize={8}
+        rowsPerPageOptions={[8]}
         checkboxSelection
       />
     </div>

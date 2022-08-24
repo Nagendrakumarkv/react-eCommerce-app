@@ -11,6 +11,7 @@ import {
   loginFailure,
   loginOutFailure,
   loginOutStart,
+  loginOutSuccess,
   loginStart,
   loginSuccess,
   RegisterUserFailure,
@@ -39,7 +40,7 @@ export const login = async (dispatch, user) => {
 export const logOut = async (dispatch) => {
   dispatch(loginOutStart());
   try {
-    dispatch(loginSuccess());
+    dispatch(loginOutSuccess());
     toast.success("Sign Out Successfully", {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 2000,

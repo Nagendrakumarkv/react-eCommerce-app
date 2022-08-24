@@ -36,7 +36,6 @@ export default function User() {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-  console.log(inputs);
   const handleUpdate = (e) => {
     e.preventDefault();
     const fileName = new Date().getTime() + " " + file.name;

@@ -36,6 +36,20 @@ export const userSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
+    //FORGOT PASSWORD
+    ForgotPasswordStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
+    ForgotPasswordSuccess: (state, action) => {
+      state.isFetching = false;
+      state.registeredUser = action.payload;
+    },
+    ForgotPasswordFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
+
     //LOGIN OUT
     loginOutStart: (state) => {
       state.isFetching = true;
@@ -59,6 +73,9 @@ export const {
   RegisterUserStart,
   RegisterUserSuccess,
   RegisterUserFailure,
+  ForgotPasswordStart,
+  ForgotPasswordSuccess,
+  ForgotPasswordFailure,
   loginOutStart,
   loginOutSuccess,
   loginOutFailure,

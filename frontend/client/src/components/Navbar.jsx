@@ -50,11 +50,16 @@ const SearchContainer = styled.div`
   margin-left: 25px;
   padding: 5px;
   height: 20px;
+  width: 100px;
 `;
 
 const Input = styled.input`
   border: none;
   ${mobile({ width: "50px" })}
+  height: 5px;
+  margin-top: 20px;
+  margin-left: -5px;
+  margin-bottom: 20px;
 `;
 
 const Center = styled.div`
@@ -118,10 +123,7 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input
-              style={{ height: "2px", marginBottom: "20px" }}
-              placeholder="Search"
-            />
+            <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>

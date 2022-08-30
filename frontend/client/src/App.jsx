@@ -15,12 +15,13 @@ import {
 } from "react-router-dom";
 import Success from "./pages/Success";
 import { useSelector } from "react-redux";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
   return (
     <Router>
-      <ToastContainer />
+      <ToastContainer position="top-center" autoClose="3000" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/success" element={<Success />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </Router>
   );

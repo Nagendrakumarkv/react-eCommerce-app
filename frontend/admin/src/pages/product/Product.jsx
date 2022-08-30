@@ -165,27 +165,27 @@ export default function Product() {
             <input
               name="title"
               type="text"
-              placeholder={product.title}
+              placeholder={product.title ? product.title : ""}
               onChange={handleInput}
             />
             <label>Product Description</label>
             <input
               name="desc"
               type="text"
-              placeholder={product.desc}
+              placeholder={product.desc ? product.desc : ""}
               onChange={handleInput}
             />
             <label>Categories</label>
             <input
               type="text"
-              placeholder={product.categories}
+              placeholder={product.categories ? product.categories : ""}
               onChange={handleCat}
             />
             <label>Price</label>
             <input
               name="price"
               type="text"
-              placeholder={product.price}
+              placeholder={product.price ? product.price : ""}
               onChange={handleInput}
             />
             <label>In Stock</label>
@@ -197,7 +197,7 @@ export default function Product() {
           <div className="productFormRight">
             <div className="productUpload">
               <img src={product.img} alt=" " className="productUploadImg" />
-              <label for="file">
+              <label htmlFor="file">
                 <Publish style={{ cursor: "pointer" }} />
               </label>
               <input

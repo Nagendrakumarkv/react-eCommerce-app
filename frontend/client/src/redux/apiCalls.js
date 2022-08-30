@@ -8,6 +8,9 @@ import {
   removeProductSuccess,
 } from "./cartRedux";
 import {
+  ForgotPasswordFailure,
+  ForgotPasswordStart,
+  ForgotPasswordSuccess,
   loginFailure,
   loginOutFailure,
   loginOutStart,
@@ -27,12 +30,10 @@ export const login = async (dispatch, user) => {
   try {
     const res = await publicRequest.post("/auth/login", user);
     dispatch(loginSuccess(res.data));
-    toast.success("Login Successfully", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000,
-    });
+    toast.success("Login Successfully");
   } catch {
     dispatch(loginFailure());
+    toast.error("Wrong Credentials");
   }
 };
 
@@ -41,10 +42,7 @@ export const logOut = async (dispatch) => {
   dispatch(loginOutStart());
   try {
     dispatch(loginOutSuccess());
-    toast.success("Sign Out Successfully", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000,
-    });
+    toast.success("Sign Out Successfully");
   } catch {
     dispatch(loginOutFailure());
   }
@@ -56,12 +54,25 @@ export const register = async (dispatch, user) => {
   try {
     const res = await publicRequest.post("/auth/register", user);
     dispatch(RegisterUserSuccess(res.data));
-    toast.success("Registered Successfully", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000,
-    });
+    toast.success("Registered Successfully");
   } catch {
     dispatch(RegisterUserFailure());
+    toast.error("Registered Unsucessfull");
+  }
+};
+
+//FORGOT PASSWORD
+export const forgotPassword = async (dispatch, userInfo) => {
+  dispatch(ForgotPasswordStart());
+  try {
+    const res = await publicRequest.post("/auth/forgot-password", { userInfo });
+    dispatch(ForgotPasswordSuccess(res.data));
+    toast.success("password reset successfull");
+  } catch {
+    dispatch(ForgotPasswordFailure());
+    toast.error(
+      "wrong username or entered password is already existed with this username"
+    );
   }
 };
 
@@ -78,10 +89,7 @@ export const addToCart = async (dispatch, cartItem) => {
       cartProductId: res.data._id,
     };
     dispatch(addToCartSuccess(newCartObject));
-    toast.success("Product Added To Cart Successfully", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000,
-    });
+    toast.success("Product Added To Cart Successfully");
   } catch {
     dispatch(addToCartFailure());
   }
@@ -93,15 +101,9 @@ export const removeCartProduct = async (dispatch, id) => {
   try {
     const res = await userRequest.delete(`/carts/${id}`);
     dispatch(removeProductSuccess(id));
-    toast.success(res.data, {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000,
-    });
+    toast.success(res.data);
   } catch {
     dispatch(removeProductFailure());
-    toast.error("Something Went Wrong", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 2000,
-    });
+    toast.error("Something Went Wrong");
   }
 };

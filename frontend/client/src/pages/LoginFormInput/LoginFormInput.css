@@ -10,3 +10,6 @@ input:invalid[focused="true"] {
 input:invalid[focused="true"] ~ span {
   display: block;
 }
+.label {
+  margin: 20px 0px -5px 70px;
+}

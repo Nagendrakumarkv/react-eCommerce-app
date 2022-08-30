@@ -130,7 +130,7 @@ export default function User() {
                 <input
                   type="text"
                   name="username"
-                  placeholder={user.username}
+                  placeholder={user.username ? user.username : ""}
                   className="userUpdateInput"
                   onChange={handleInputs}
                 />
@@ -140,7 +140,7 @@ export default function User() {
                 <input
                   type="text"
                   name="fullname"
-                  placeholder={user.fullname}
+                  placeholder={user.fullname ? user.fullname : ""}
                   className="userUpdateInput"
                   onChange={handleInputs}
                 />
@@ -150,7 +150,7 @@ export default function User() {
                 <input
                   type="text"
                   name="email"
-                  placeholder={user.email}
+                  placeholder={user.email ? user.email : ""}
                   className="userUpdateInput"
                   onChange={handleInputs}
                 />
@@ -160,7 +160,7 @@ export default function User() {
                 <input
                   type="text"
                   name="phone"
-                  placeholder={user.phone}
+                  placeholder={user.phone ? user.phone : ""}
                   className="userUpdateInput"
                   onChange={handleInputs}
                 />
@@ -170,7 +170,7 @@ export default function User() {
                 <input
                   type="text"
                   name="address"
-                  placeholder={user.address}
+                  placeholder={user.address ? user.address : ""}
                   className="userUpdateInput"
                   onChange={handleInputs}
                 />
@@ -180,7 +180,7 @@ export default function User() {
                 <select
                   className="newUserSelect"
                   name="active"
-                  placeholder={user.active}
+                  placeholder={user.active ? user.active : ""}
                   id="active"
                   onChange={handleInputs}
                 >

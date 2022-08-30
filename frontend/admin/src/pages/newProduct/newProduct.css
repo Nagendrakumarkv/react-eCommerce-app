@@ -7,28 +7,36 @@
 }
 
 .addProductItem {
-  width: 250px;
+  width: 400px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-right: 20px;
 }
 
 .addProductItem > label {
-  color: gray;
-  font-weight: 600;
   margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(151, 150, 150);
 }
 
 .addProductItem > input {
+  height: 20px;
   padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 
 .addProductItem > select {
+  height: 40px;
   padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 
 .addProductButton {
-  margin-top: 10px;
+  margin-top: 20px;
   padding: 7px 10px;
   border: none;
   border-radius: 10px;
@@ -36,4 +44,8 @@
   color: white;
   font-weight: 600;
   cursor: pointer;
+}
+.addProductButton:disabled {
+  color: blue;
+  cursor: not-allowed;
 }

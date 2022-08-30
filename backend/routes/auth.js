@@ -14,6 +14,10 @@ router.post("/register", async (req, res) => {
       req.body.password,
       process.env.PASS_SEC
     ).toString(),
+    confirmPassword: CryptoJS.AES.encrypt(
+      req.body.password,
+      process.env.PASS_SEC
+    ).toString(),
     address: req.body.address,
     phone: req.body.phone,
     img: req.body.img,
@@ -24,6 +28,40 @@ router.post("/register", async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+//FORGOT PASSWORD
+router.post("/forgot-password", async (req, res) => {
+  console.log(req.body.userInfo);
+  try {
+    const user = await User.findOne({ username: req.body.userInfo.username });
+    console.log(user);
+
+    if (!user) {
+      return res.status(401).json("you are entered wrong username");
+    } else {
+      const hashedPassword = CryptoJS.AES.decrypt(
+        user.password,
+        process.env.PASS_SEC
+      );
+      const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+      const inputPassword = req.body.userInfo.password;
+
+      if (originalPassword === inputPassword) {
+        return res.status(401).json("Password is already existed");
+      } else {
+        const inputPasswordHashed = CryptoJS.AES.encrypt(
+          req.body.userInfo.password,
+          process.env.PASS_SEC
+        ).toString();
+
+        user.password = inputPasswordHashed;
+
+        const savedUser = await user.save();
+        return res.status(201).json(savedUser);
+      }
+    }
+  } catch {}
 });
 
 //LOGIN

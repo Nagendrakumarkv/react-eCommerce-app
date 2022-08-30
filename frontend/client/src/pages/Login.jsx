@@ -1,21 +1,23 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { login } from "../redux/apiCalls";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import LoginFormInput from "./LoginFormInput/LoginFormInput";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
+  /* background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
     url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
+      center; */
+  background-color: lightgrey;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -32,6 +34,7 @@ const Wrapper = styled.div`
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
+  margin-left: 130px;
 `;
 
 const Form = styled.form`
@@ -48,6 +51,7 @@ const Button = styled.button`
   cursor: pointer;
   margin-bottom: 10px;
   margin-top: 20px;
+  margin-left: 70px;
   &:disabled {
     color: green;
     cursor: not-allowed;
@@ -62,6 +66,7 @@ const ForgotPasswordButton = styled.button`
   cursor: pointer;
   border: none;
   background-color: white;
+  margin-left: 66px;
 `;
 const RegisterButton = styled.button`
   color: black;
@@ -71,15 +76,13 @@ const RegisterButton = styled.button`
   text-decoration: underline;
   border: none;
   background-color: white;
-`;
-const Error = styled.span`
-  color: red;
+  margin-left: 66px;
 `;
 
 const Login = () => {
-  const { isFetching, error } = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const [disableCreateButton, setDisableCreateButton] = useState(false);
 
@@ -93,7 +96,7 @@ const Login = () => {
       id: 1,
       name: "username",
       type: "text",
-      placeholder: "Username*",
+      placeholder: "username*",
       errorMessage:
         "Username should be 3-16 charecter and shouldn't include spacial charecter",
       label: "Username",
@@ -104,7 +107,7 @@ const Login = () => {
       id: 2,
       name: "password",
       type: "password",
-      placeholder: "Password*",
+      placeholder: "password*",
       errorMessage:
         "Password should be 8-20 charecter and atleast 1 char,1 number,1 spacial charecter",
       label: "Password",
@@ -139,6 +142,10 @@ const Login = () => {
     login(dispatch, values);
   };
 
+  const forgotPassword = () => {
+    navigate("/forgot-password");
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -152,14 +159,14 @@ const Login = () => {
               onChange={onChange}
             />
           ))}
-          <Button
-            onClick={handleClick}
-            disabled={isFetching || disableCreateButton}
-          >
+          <Button onClick={handleClick} disabled={disableCreateButton}>
             LOGIN
           </Button>
-          {error && <Error>Something went wrong...</Error>}
-          <ForgotPasswordButton>
+          <ForgotPasswordButton
+            onClick={() => {
+              forgotPassword();
+            }}
+          >
             DO NOT YOU REMEMBER THE PASSWORD?
           </ForgotPasswordButton>
           <Link to="/register">

@@ -41,8 +41,12 @@ export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post("/auth/login", user);
-    dispatch(loginSuccess(res.data));
-    toast.success("Login Successfull");
+    if (res.data.isAdmin) {
+      dispatch(loginSuccess(res.data));
+      toast.success("Login Successfull");
+    } else {
+      toast.error("User Is Not Admin");
+    }
   } catch {
     dispatch(loginFailure());
     toast.error("Login Unsuccessful,Please Check the Credentials");

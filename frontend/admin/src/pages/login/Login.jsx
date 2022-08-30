@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import LoginFormInput from "./LoginFormInput";
 import { useEffect } from "react";
 import { login } from "../../redux/apiCalls";
 import "./login.css";
 
 const Login = () => {
-  const { isFetching } = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
 
   const [disableCreateButton, setDisableCreateButton] = useState(false);
@@ -64,7 +62,6 @@ const Login = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-
     login(dispatch, values);
   };
 
@@ -84,12 +81,9 @@ const Login = () => {
           <button
             className="Button"
             onClick={handleClick}
-            disabled={isFetching || disableCreateButton}
+            disabled={disableCreateButton}
           >
             LOGIN
-          </button>
-          <button className="ForgotPasswordButton">
-            DO NOT YOU REMEMBER THE PASSWORD?
           </button>
         </form>
       </div>

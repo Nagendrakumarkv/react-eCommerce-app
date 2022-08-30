@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import "./LoginFormInput.css";
+import "./ForgotPasswordFormInput.css";
 
 const FormInput = styled.div`
   display: flex;
@@ -12,10 +12,9 @@ const Span = styled.span`
   padding: 3px;
   color: red;
   display: none;
-  margin-left: 67px;
 `;
 
-const LoginFormInput = (props) => {
+const ForgotPasswordFormInput = (props) => {
   const [focused, setFocused] = useState(false);
 
   const { label, errorMessage, onChange, ...inputProps } = props;
@@ -31,11 +30,14 @@ const LoginFormInput = (props) => {
         {...inputProps}
         onChange={onChange}
         onBlur={handleFocus}
+        onFocus={() =>
+          inputProps.name === "confirmPassword" && setFocused(true)
+        }
         focused={focused.toString()}
       />
-      <Span>{errorMessage}</Span>
+      <Span style={{ marginLeft: "70px" }}>{errorMessage}</Span>
     </FormInput>
   );
 };
 
-export default LoginFormInput;
+export default ForgotPasswordFormInput;
